@@ -1,50 +1,85 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Specify Project Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Code Quality (NON-NEGOTIABLE)
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+Every piece of code MUST be readable, maintainable, and purposeful.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+- Code MUST be reviewed before merging — no self-merges on shared branches.
+- Functions and modules MUST have a single, clear responsibility (Single Responsibility Principle).
+- Dead code, unused imports, and commented-out blocks MUST be removed before merging.
+- Naming MUST be descriptive and consistent with the existing codebase conventions.
+- Complexity MUST be justified; simpler solutions are preferred when functionally equivalent.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**Rationale**: Unmaintainable code accumulates technical debt that compounds over time,
+slowing delivery and increasing defect rates. Quality is enforced at the source, not patched later.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### II. Testing Standards (NON-NEGOTIABLE)
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+Tests are a first-class deliverable, not an afterthought.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+- TDD is mandatory: tests MUST be written and confirmed failing before implementation begins.
+- Every feature MUST have unit tests covering primary flows and edge cases.
+- Integration tests MUST cover cross-module boundaries and external contracts.
+- A minimum of 80% code coverage is required for new code; coverage MUST NOT regress.
+- Tests MUST be deterministic — flaky tests MUST be fixed or removed immediately.
+- Test names MUST describe behavior, not implementation (e.g., "user cannot checkout with empty cart").
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+**Rationale**: Tests are the specification in executable form. They protect against regression,
+document intent, and enable confident refactoring. The TDD gate enforces design discipline.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### III. User Experience Consistency
+
+Every user-facing surface MUST follow established interaction patterns and design language.
+
+- UI components MUST reuse existing design system elements before introducing new ones.
+- Error messages MUST be actionable, human-readable, and free of technical jargon.
+- User flows MUST be validated against acceptance scenarios defined in the spec before shipping.
+- Accessibility (WCAG 2.1 AA minimum) MUST be verified for all new UI surfaces.
+- Behavioral changes visible to users MUST be documented in release notes.
+
+**Rationale**: Inconsistent UX erodes user trust and increases support burden.
+Standardizing interactions reduces cognitive load and accelerates user adoption.
+
+### IV. Performance Requirements
+
+Performance is a feature and MUST be considered from the design phase.
+
+- Every feature MUST define measurable, user-facing performance criteria in its spec.
+- Regressions in response time or resource consumption MUST be flagged and justified before merging.
+- Performance-critical paths MUST be profiled; optimizations MUST be data-driven, not speculative.
+- Features MUST degrade gracefully under load — no hard failures without user feedback.
+- Baseline benchmarks MUST be established before optimizing and verified after.
+
+**Rationale**: Performance issues discovered late are expensive to fix and damage user experience.
+Defining targets upfront aligns design, implementation, and testing around measurable outcomes.
+
+## Quality Gates
+
+All work MUST pass the following gates before merging:
+
+- **Code review**: At least one peer review approval required.
+- **TDD gate**: Tests written, confirmed failing, then implementation follows.
+- **Coverage gate**: New code meets 80% coverage threshold.
+- **Performance gate**: No regressions against established baselines.
+- **UX gate**: User flows validated against spec acceptance scenarios.
+- **Constitution check**: Plan explicitly documents compliance or justified deviation
+  for each applicable principle.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution supersedes all other project practices. Amendments require:
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+1. A documented rationale explaining the change.
+2. A review of impact on existing features and pipelines.
+3. A migration plan if existing code must be updated for compliance.
+4. A version bump following semantic versioning:
+   - **MAJOR**: Principle removed, redefined, or made incompatible with prior work.
+   - **MINOR**: New principle or section added.
+   - **PATCH**: Clarification, wording fix, or non-semantic refinement.
+
+All planning sessions (`/speckit.plan`) MUST include a Constitution Check gate that explicitly
+confirms compliance or documents justified deviation for each principle.
+
+**Version**: 1.0.0 | **Ratified**: 2026-05-08 | **Last Amended**: 2026-05-08
