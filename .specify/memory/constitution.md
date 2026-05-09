@@ -55,6 +55,20 @@ Performance is a feature and MUST be considered from the design phase.
 **Rationale**: Performance issues discovered late are expensive to fix and damage user experience.
 Defining targets upfront aligns design, implementation, and testing around measurable outcomes.
 
+## Technical Constraints
+
+These constraints apply to the entire project and MUST NOT be overridden at the feature level.
+
+- **Backend**: All server-side code MUST be written in C# targeting .NET 10 (or the latest LTS version).
+- **API**: All backend services MUST be exposed as RESTful HTTP APIs using ASP.NET Core.
+- **Frontend**: All client-side UI MUST be built with the latest stable version of React.
+- **Full-stack**: No other backend language or frontend framework is permitted without a MAJOR constitution amendment.
+- **Interoperability**: Backend APIs MUST follow REST conventions and be consumable by any standard HTTP client.
+
+**Rationale**: A unified technology stack reduces context-switching, simplifies hiring,
+and ensures consistent tooling across all features. .NET + React is a proven,
+well-supported combination for web applications.
+
 ## Quality Gates
 
 All work MUST pass the following gates before merging:
@@ -82,4 +96,4 @@ This constitution supersedes all other project practices. Amendments require:
 All planning sessions (`/speckit.plan`) MUST include a Constitution Check gate that explicitly
 confirms compliance or documents justified deviation for each principle.
 
-**Version**: 1.0.0 | **Ratified**: 2026-05-08 | **Last Amended**: 2026-05-08
+**Version**: 1.1.0 | **Ratified**: 2026-05-08 | **Last Amended**: 2026-05-08
