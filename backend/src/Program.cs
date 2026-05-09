@@ -49,16 +49,26 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
-}
-
 app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+// Seed dev data
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    if (app.Environment.IsDevelopment())
+    {
+        await DbInitializer.SeedAsync(db);
+    }
+    else
+    {
+        await db.Database.MigrateAsync();
+    }
+}
+
 app.Run();
 
 public partial class Program;
