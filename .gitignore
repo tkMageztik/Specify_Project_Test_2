@@ -437,3 +437,8 @@ FodyWeavers.xsd
 .squad-workstream
 *.db
 dist/
+
+# Local dev secrets — never commit
+appsettings.Development.json
+appsettings.*.json
+!appsettings.json
